@@ -1,0 +1,17 @@
+{
+    "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+],
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES6",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
