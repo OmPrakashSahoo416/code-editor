@@ -11,8 +11,12 @@ export default defineConfig({
     },
   },
   server:{
-    proxy:{
-      "/product" : "http://localhost:8000"
-    }
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: false,
+        
+      },
+    },
   }
 })

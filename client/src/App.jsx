@@ -1,14 +1,18 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
+import LandingPage from './components/pages/LandingPage'
+// import {ClerkProvider} from "@clerk/clerk-react"
 
 
-async function App() {
+ function App() {
 
+
+  
+
+  
   
 
   return (
     <>
-      
+      <LandingPage />
 
     </>
   )
