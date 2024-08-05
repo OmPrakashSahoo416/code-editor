@@ -12,16 +12,28 @@ dotenv.config({path:"./.env"})
 const app = express()
 // creating a http server since socket is not compatible with express 
 const server = http.createServer(app)
-const io = new Server(server);
 
-io.on("connected", (socket) => {
-    console.log("user connected")
+// to enable cors to avoid getting cross platform errors when connecting with the client side front end 
+// replace after deployment
+const io = new Server(server,{
+    cors:{
+        origin:"http://localhost:5173"
+    }
+});
+
+// to enable cross connection between server and client 
+app.use(cors())
+app.use(cors({
+    origin:"http://localhost:5173"
+}))
+
+io.on("connect", (socket) => {
+    console.log("User connected with id : " + socket.id)
 })
 
 
 
-// to enable cross connection between server and client 
-app.use(cors())
+
 
 
 // we can get the http requests and response values 
@@ -33,17 +45,8 @@ app.get("/", (req, res, cb) => {
 })
 
 
-// home route just for testing purposes
-// app.get("/api/protected", (req, res, cb) => {
-//     res.send("Hello from the server");
-// })
-
-
-// authenticating the user from front end and verifying here to access the protected route 
-// app.get("/protected", ClerkExpressRequireAuth(), (req, res, cb) => {
-    
-// })
 
 
 
-app.listen(process.env.PORT,console.log(`Server is running on port ${process.env.PORT}`))
+
+server.listen(process.env.PORT,console.log(`Server is running on port ${process.env.PORT}`))

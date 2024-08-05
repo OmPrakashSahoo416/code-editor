@@ -1,15 +1,15 @@
 import io from "socket.io-client"
 
-const serverPath = import.meta.env.SERVER_URL
 
 export async function initSocket() {
 
-    options = {
+    
+
+    return io(import.meta.env.VITE_SERVER_URL,
+        {
         forceNew: true,
         reconnectionAttempt:"Infinity",
         timeout:10000,
         transports: ['websocket']
-    }
-
-    return io(serverPath, options)
+    })
 }

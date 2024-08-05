@@ -8,9 +8,14 @@ import SideBar from "./SideBar";
 import CodeEditor from "./Editor";
 import { useEffect, useRef } from "react";
 import { initSocket } from "../../../socket";
-import { actions } from "../../../actions/actions";
+import { io } from "socket.io-client";
+// import { createSocket } from "dgram";
 // import { redirectDocument } from 'react-router-dom';
 
+async function createSocket() {
+
+    return await initSocket();
+}
 
 
 
@@ -18,21 +23,30 @@ import { actions } from "../../../actions/actions";
 export default Dashboard => {
 
     const {isSignedIn} = useAuth()
+
     // creating a socket in a reference so that is dont trigger a re render 
     const socketRef = useRef()
+
+    // socketRef.current = io("http://localhost:8000/")
+
+    //in vite use env variables with this name => VITE_..... this env variables is only accessible in vite project
+    
 
 
     useEffect(() => {
 
-
-
-        const initializeSocket = async () => {
-            socketRef.current = await initSocket()
-            socketRef.current.emit(actions.JOIN)
-        }
-
+        socketRef.current = createSocket()
 
     }, [])
+
+
+
+
+    
+
+
+
+    
 
     
 
