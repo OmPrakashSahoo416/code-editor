@@ -9,6 +9,7 @@ import { RouterProvider } from 'react-router'
 import { ClerkProvider } from '@clerk/clerk-react'
 import Dashboard from './components/pages/dashboard/Dashboard.jsx'
 import Signout from './components/pages/auth/SignOut.jsx'
+import Home from './components/pages/home/Home.jsx'
 // import { SignIn } from "@clerk/clerk-react"
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
     path:"/sign-out"
   },
   {
+    element: <Home />,
+    path:"/home"
+  },
+  {
     element: <Dashboard />,
-    path:"/dashboard"
+    path:"/editor/:roomid"
   }
 ])
 

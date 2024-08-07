@@ -27,8 +27,25 @@ app.use(cors({
     origin:"http://localhost:5173"
 }))
 
-io.on("connect", (socket) => {
-    console.log("User connected with id : " + socket.id)
+let connectedClient = []
+
+io.on("connection", (socket) => {
+    console.log("User connected with id : " + socket.id) 
+    
+    socket.on("test" ,(data) => {
+        console.log(data)
+        // push the connected client to array 
+        connectedClient.push(data);
+
+        // update the list in clients with emiting the data to clients 
+        io.emit("update", connectedClient)
+        
+    })
+
+})
+
+io.on("test", data => {
+    console.log(data)
 })
 
 

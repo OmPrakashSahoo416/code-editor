@@ -15,7 +15,7 @@ export default LandingPage => {
     return (
         <>
         <SignedIn>
-            <Navigate to={'/dashboard'}></Navigate>
+            <Navigate to={'/home'}></Navigate>
         </SignedIn>
 
         <SignedOut>

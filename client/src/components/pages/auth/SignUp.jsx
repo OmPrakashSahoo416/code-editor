@@ -11,7 +11,7 @@ export default Signup => {
 
         <>
         <div className="signup w-full h-full flex justify-center items-center">
-            <SignUp signInUrl="/sign-in" fallbackRedirectUrl={"/dashboard"}></SignUp>
+            <SignUp signInUrl="/sign-in" fallbackRedirectUrl={"/home"}></SignUp>
             </div>
         </>
 
