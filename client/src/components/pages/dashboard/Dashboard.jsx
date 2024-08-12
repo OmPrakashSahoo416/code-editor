@@ -8,6 +8,7 @@ import SideBar from "./SideBar";
 import CodeEditor from "./Editor";
 import { useEffect, useRef, useState } from "react";
 import {  initSocket } from "../../../socket";
+import { useParams } from "react-router-dom";
 
 
 // import { io } from "socket.io-client";
@@ -25,6 +26,9 @@ export default function Dashboard () {
     // console.log(userDetails)
 
     const [connectedUsers, setConnectedUsers] = useState([])
+    const [content, setContent] = useState("");
+    const {roomId} = useParams()
+    // console.log(roomId)
 
     // user details to send to the server on connection and then server will send back the list of 
     // connected members and we will use that to display in the sidebar 
@@ -35,6 +39,13 @@ export default function Dashboard () {
         const { user, isLoaded } = useUser();
 
         useEffect(() => {
+            if (socketRef.current) {
+                //emit when code is edited in the room
+                // console.log(content)
+                socketRef.current.emit("code", {roomId:roomId, code:content})  
+
+            }
+            
             if (isLoaded && user) {
 
                 // setUserDetails(user);
@@ -42,14 +53,22 @@ export default function Dashboard () {
                 // Ensure socket is only created once
                 if (!socketRef.current) {
                   socketRef.current = initSocket();
-                  console.log(user)
+                //   console.log(user)
           
                   // Only emit events when socket is initialized
                   socketRef.current.emit("test", {name:user?.fullName, image:user?.imageUrl})
 
+                  socketRef.current.on("code", data => {
+                    // console.log(data)
+                    // if (data.roomId == roomId) {
+                        setContent(data)
+                    // }
+                  })
+
+
                 // calling the emit function whenever we make a connection to a dashboard
                   socketRef.current.on("update", data => {
-                    console.log(data)
+                    // console.log(data)
                     setConnectedUsers([...data])
                   })
 
@@ -57,38 +76,19 @@ export default function Dashboard () {
                 }
     
             }
-        }, [isLoaded,user, connectedUsers])
-
-        // useEffect(() => {
-
-        // })
-        
-        // so that we do not create more than 1 socket for each user 
-        // if (!socketRef.current) {
-        //     socketRef.current = initSocket()
-
-        // }
-
+            return () => socketRef.current && socketRef.current.disconnect()
+        }, [isLoaded,user, connectedUsers, content])
 
         
+        //in vite use env variables with this name => VITE_..... this env variables is only accessible in vite project
         
-            // socketRef.current = io("http://localhost:8000/")
-        
-            //in vite use env variables with this name => VITE_..... this env variables is only accessible in vite project
-        
-        
-            // creating a socket connection when user enters the room 
-            // socketRef.current = initSocket()
-        
-        
-
     return (
         <>
         <SignedIn>
             <div className="dashboardContent flex h-full w-full bg-slate-400">
 
                 <SideBar connectedUsers={connectedUsers}></SideBar>
-                <CodeEditor ></CodeEditor>
+                <CodeEditor content={content} setContent={setContent} ></CodeEditor>
             </div>
 
         </SignedIn>

@@ -1,11 +1,11 @@
-import { SignedIn, SignedOut, RedirectToSignIn, UserButton, useUser } from "@clerk/clerk-react"
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
 // import { Button } from "../../ui/button"
 import { Navigate, useNavigate } from "react-router-dom"
-import { useAuth } from '@clerk/clerk-react';
+// import { useAuth } from '@clerk/clerk-react';
 // import SideBar from "./SideBar";
 // import CodeEditor from "./Editor";
 // import { useEffect, useRef } from "react";
-import { Button } from "../../ui/button";
+// import { Button } from "../../ui/button";
 import { DialogDemo } from "./dialogBox";
 import { useState } from "react";
 
@@ -13,10 +13,10 @@ import { useState } from "react";
 
 
 
-export default Dashboard => {
+export default function Dashboard() {
 
-    const {isSignedIn} = useAuth()
-    const {user} = useUser()
+    // const {isSignedIn} = useAuth()
+    // const {user} = useUser()
 
     const navigate = useNavigate()
 
@@ -50,11 +50,16 @@ export default Dashboard => {
 
                     {room.map((room, index) => {
                         return (
-                            <div onClick={() => navigate(`/editor/${room.id}`)} key={index} className="w-[200px] p-2 h-[150px] mb-5 mr-5 rounded-md hover:cursor-pointer overflow-hidden bg-slate-300">
-                                
-                                <p>{room.name}</p>
-                                <p>{room.id}</p>
+                            <>
+                            <div className="flex flex-col items-start mb-5 mr-5 w-[200px] space-y-1">
+
+                                <div onClick={() => navigate(`/editor/${room.id}`)} key={index} className="w-full p-2 h-[150px]  rounded-md hover:cursor-pointer overflow-hidden bg-slate-300">
+                                    
+                                    <p>{room.name}</p>
+                                </div>
+                                <p className="p-2 text-xs font-semibold text-center border w-full rounded-md bg-slate-200">{room.id}</p>
                             </div>
+                            </>
                         )
                     })}
 

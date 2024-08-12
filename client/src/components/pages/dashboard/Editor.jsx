@@ -1,17 +1,22 @@
 // use monaco editor to add code editor functionalities 
 import Editor from '@monaco-editor/react';
-import { useEffect, useRef, useState } from 'react';
+// import {  useEffect, useState } from 'react';
 
 
 
 
-export default function CodeEditor() {
+export default function CodeEditor({content, setContent}) {
 
-    const [content, setContent] = useState("");
+    
 
     
 
     // console.log(content)
+    // useEffect(() => {
+
+
+
+    // }, [content])
 
 
     return (

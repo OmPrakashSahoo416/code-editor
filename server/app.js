@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import http from "http"
 import {Server} from "socket.io"
+import { setTimeout } from "timers/promises"
 
 // hit any http request with /api/.. routed you will hit the server side codes and database access and requests 
 
@@ -33,14 +34,38 @@ io.on("connection", (socket) => {
     console.log("User connected with id : " + socket.id) 
     
     socket.on("test" ,(data) => {
-        console.log(data)
+        // console.log(data)
         // push the connected client to array 
-        connectedClient.push(data);
+        connectedClient.push({...data,socketid:socket.id});
+        // console.log(data)
 
         // update the list in clients with emiting the data to clients 
         io.emit("update", connectedClient)
         
     })
+
+    socket.on("disconnect", () => {
+
+        connectedClient = connectedClient.filter((client) => client.socketid != socket.id)
+
+        // update the room members list
+        io.emit("update", connectedClient)
+        // console.log("Client disconnected!")
+
+
+    })
+
+    // getting the updated code 
+    socket.on("code", data => {
+        // console.log(data)
+
+        // now the io needs to send the code back to all users in the room except for himself
+        socket.broadcast.emit('code', data.code)
+    })
+
+
+    
+    
 
 })
 
