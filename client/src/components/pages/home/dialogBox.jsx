@@ -13,7 +13,7 @@ import {
 // import { Input } from "@/components/ui/input"
 import { nanoid } from 'nanoid'
 import { useState } from "react"
-import { redirect, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 
 // import { Label } from "@/components/ui/label"
 
@@ -27,12 +27,7 @@ export function DialogDemo({room, setRoom}) {
 
     const navigate = useNavigate();
 
-    function OpenPrompt() {
-      return (
-        <></>
-
-      )
-    }
+    
     
 
     // console.log(room)
