@@ -12,10 +12,6 @@ import {  initSocket } from "../../../socket";
 import { useParams } from "react-router-dom";
 
 
-// import { io } from "socket.io-client";
-// import { createSocket } from "dgram";
-// import { redirectDocument } from 'react-router-dom';
-
 
 
 
@@ -30,7 +26,7 @@ export default function Dashboard () {
     const [content, setContent] = useState("");
     const {roomId} = useParams()
 
-    // console.log(roomId)
+    console.log(connectedUsers)
 
     // user details to send to the server on connection and then server will send back the list of 
     // connected members and we will use that to display in the sidebar 
@@ -42,12 +38,7 @@ export default function Dashboard () {
 
         useEffect(() => {
             
-            // if (socketRef.current) {
-                //emit when code is edited in the room
-                // console.log(content)
-            //     socketRef.current.emit("code", {roomId:roomId, code:content})  
-
-            // }
+            
             
             if (isLoaded && user) {
                 setUserDetails(user);
@@ -107,7 +98,7 @@ export default function Dashboard () {
         <SignedIn>
             <div className="dashboardContent flex h-full w-full bg-slate-400">
 
-                <SideBar connectedUsers={connectedUsers}></SideBar>
+                <SideBar inputRef={socketRef} connectedUsers={connectedUsers}></SideBar>
                 <CodeEditor content={content} setContent={setContent} ></CodeEditor>
             </div>
 
