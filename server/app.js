@@ -112,9 +112,9 @@ io.on("connection", (socket) => {
 // we can get the http requests and response values
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res, cb) => {
-  res.send("Server route");
-});
+// app.get("/", (req, res, cb) => {
+//   res.send("Server route");
+// });
 
 server.listen(
   process.env.PORT,

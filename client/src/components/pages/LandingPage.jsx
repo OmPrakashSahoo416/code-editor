@@ -21,6 +21,7 @@ export default function LandingPage()  {
         <SignedOut>
 
             <div className="w-full font-['Arial'] h-full flex justify-center flex-col space-y-5 items-center">
+                <img src="https://cdn.openart.ai/published/cCMNRSjCdHvmZqwXYfIm/S_vyYw-n_XDuy_1024.webp" className="w-20 h-20 rounded-full drop-shadow-lg border-2 border-green-500" alt="" />
                 <div className="text-xl font-bold text-slate-600">Welcome to <span className="text-green-500    underline decoration-wavy ">CollabCode.</span></div>
                 <div className="flex items-center justify-center space-x-3">
                     <a href="/sign-in"><Button size="lg" className="bg-green-500 hover:bg-green-600">Sign in</Button></a>
