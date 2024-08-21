@@ -25,7 +25,7 @@ export default function SideBar({inputRef,connectedUsers}) {
 
   return (
     <>
-      <div className="sidebar flex-[0.15] flex justify-between flex-col h-full p-2 bg-neutral-800">
+      <div className="sidebar flex-[0.15] font-['Arial'] flex justify-between flex-col h-full p-2 bg-green-500">
         <div className="">
 
         
@@ -35,12 +35,13 @@ export default function SideBar({inputRef,connectedUsers}) {
           <hr className="my-5" />
         <div className="userInfo flex items-center space-x-2  mb-3">
           <div className="connectedMembers flex flex-col space-y-1 ">
-            <p className="text-neutral-100">Active members</p>
+            <p className="text-sm font-bold text-green-100">Active members</p>
 
           {/* show the list of users connected to the particular room fetch from server someway */}
           {connectedUsers.map((userData) => {
             // console.log(userData[0])
             return (
+                userData.roomId == roomId && 
 
                 <div key={userData.id} className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-rose-200 rounded-full">
@@ -48,6 +49,7 @@ export default function SideBar({inputRef,connectedUsers}) {
                     </div>
                     <p className="text-neutral-100">{userData.user.fullName}</p>
                 </div>
+                
             )
           })}
 
@@ -57,8 +59,8 @@ export default function SideBar({inputRef,connectedUsers}) {
         <Separator></Separator>
         </div>
           {/* input is passed so that on redirect we are first modifying the connected client array by making the socket disconnect */}
-        <Button onClick={() => (inputRef.current.disconnect(),navigate("/"))} size="sm" variant="secondary" className="w-full bottom-0">Leave</Button>
-      </div>)
+        <Button onClick={() => (inputRef.current.disconnect(),navigate("/"))} size="sm" variant="secondary" className="w-full bottom-0 font-bold text-slate-600 text-sm ">Leave</Button>
+      </div>
     </>
   );
 }

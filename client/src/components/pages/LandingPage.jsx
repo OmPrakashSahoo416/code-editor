@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Button } from "../ui/button"
-import { Link, Navigate } from "react-router-dom";
+import {  Navigate } from "react-router-dom";
 
 // navigate component is used to navigate to different pages in the client side react routes 
 // if u are signed in then the following code inside it will be triggered same for signed out 
@@ -9,7 +9,7 @@ import { Link, Navigate } from "react-router-dom";
 
 
 
-export default LandingPage => {
+export default function LandingPage()  {
 
 
     return (
@@ -20,9 +20,13 @@ export default LandingPage => {
 
         <SignedOut>
 
-            <div className="w-full h-full flex justify-center space-x-5 items-center">
-                <a href="/sign-in"><Button size="lg">Sign in</Button></a>
-                <a href="/sign-up"><Button variant="secondary" size="lg">Sign up</Button></a>
+            <div className="w-full font-['Arial'] h-full flex justify-center flex-col space-y-5 items-center">
+                <div className="text-xl font-bold text-slate-600">Welcome to <span className="text-green-500    underline decoration-wavy ">CollabCode.</span></div>
+                <div className="flex items-center justify-center space-x-3">
+                    <a href="/sign-in"><Button size="lg" className="bg-green-500 hover:bg-green-600">Sign in</Button></a>
+                    <a href="/sign-up"><Button className="bg-green-50 hover:bg-green-100" variant="secondary" size="lg">Sign up</Button></a>
+
+                </div>
             </div>
         </SignedOut>
 

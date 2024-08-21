@@ -1,8 +1,7 @@
 import { SignUp} from "@clerk/clerk-react"
-import { Link } from "react-router-dom"
 
 
-export default Signup => {
+export default function Signup () {
 
     
 

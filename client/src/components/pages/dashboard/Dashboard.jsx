@@ -23,10 +23,10 @@ export default function Dashboard () {
     // console.log(userDetails)
 
     const [connectedUsers, setConnectedUsers] = useState([])
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState({});
     const {roomId} = useParams()
 
-    console.log(connectedUsers)
+    // console.log(connectedUsers)
 
     // user details to send to the server on connection and then server will send back the list of 
     // connected members and we will use that to display in the sidebar 
@@ -47,10 +47,6 @@ export default function Dashboard () {
                 // Ensure socket is only created once
                 if (!socketRef.current) {
                   socketRef.current = initSocket();
-
-                
-                  
-                
 
                 socketRef.current.emit("roomid", roomId)
 
@@ -78,15 +74,15 @@ export default function Dashboard () {
 
                 } else {
                     // emitting the updated code to server
-                    socketRef.current.emit("asyncCodeUpdate", content)
+                    socketRef.current.emit("asyncCodeUpdate", {content:content.content, roomid:roomId})
                 }
     
             }
 
-
+        
             
             
-        }, [isLoaded,user, connectedUsers, content, roomId])
+        }, [isLoaded,user, connectedUsers, content.content, roomId])
 
 
 
@@ -99,7 +95,7 @@ export default function Dashboard () {
             <div className="dashboardContent flex h-full w-full bg-slate-400">
 
                 <SideBar inputRef={socketRef} connectedUsers={connectedUsers}></SideBar>
-                <CodeEditor content={content} setContent={setContent} ></CodeEditor>
+                {content != {} && <CodeEditor content={content} setContent={setContent} ></CodeEditor>}
             </div>
 
         </SignedIn>

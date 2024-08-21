@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
-import { setTimeout } from "timers/promises";
+// import { setTimeout } from "timers/promises";
 
 // hit any http request with /api/.. routed you will hit the server side codes and database access and requests
 
@@ -34,6 +34,7 @@ app.use(
 // since it is a single array we do not have the functionality of multiple rooms now ...
 
 let connectedClient = [];
+let roomId = ""
 
 
 
@@ -44,7 +45,8 @@ io.on("connection", (socket) => {
   // getting the room id
   socket.on("roomid", (data) => {
     // console.log(data);
-    const roomId = data;
+    roomId = data;
+    console.log(roomId)
 
     // after getting the room id from client we will make the socket join the room
     socket.join(data);
@@ -53,14 +55,6 @@ io.on("connection", (socket) => {
 
     
   });
-
-    // function emitContinuousData() {
-        
-    //     io.emit("updateClientList", connectedClient);
-    // }
-
-    // Set an interval to emit the event every 1 seconds
-    // const intervalId = setInterval(emitContinuousData, 1000);
 
   // we fetch the current user details of the socket
   socket.on("userdetails", (data) => {
@@ -72,7 +66,7 @@ io.on("connection", (socket) => {
     );
     if (!existingClient) {
       // same client do not exist so we will add it in the array
-      connectedClient.push({ id: data.id, user: data });
+      connectedClient.push({ id: data.id, user: data, roomId:roomId });
 
       //update the list in the front end
       io.emit("updateClientList", connectedClient);
@@ -96,10 +90,10 @@ io.on("connection", (socket) => {
   // getting the updated code
   socket.on("asyncCodeUpdate", (data) => {
     // we get the updated code to the server here
-    // console.log(data)
+    console.log(data)
 
     // broadcast this data to every socket in the room except itself
-    socket.broadcast.emit("asyncCodeUpdate", data)
+    socket.broadcast.to(data.roomid).emit("asyncCodeUpdate", data)
     
   });
 

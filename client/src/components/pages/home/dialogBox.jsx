@@ -13,7 +13,7 @@ import {
 // import { Input } from "@/components/ui/input"
 import { nanoid } from 'nanoid'
 import { useEffect, useState } from "react"
-import { redirect, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 
 
 
@@ -60,17 +60,16 @@ async function JoinWorkspace(value, setIsRoom) {
   // const navigate = useNavigate();
 
   const q = await db.collection("listCollection").where("fileId", "==", value).get()
-  console.log(q.docs.length)
+  // console.log(q.docs.length)
 
   if(q.docs.length == 0) {
     setIsRoom(false)
+    alert("No room available")
   } else if(q.docs.length == 1) {
     
     setIsRoom(true)
   }
 
-
-  
 
 }
 
@@ -85,23 +84,23 @@ export function DialogDemo({room, setRoom}) {
     const [name, setName] = useState("")
     const [isRoom, setIsRoom] = useState(false)
 
-    // const navigate = useNavigate();
-
-    
+    // to allow react navigation 
+    const navigate = useNavigate();
 
 
     // fetch the user id 
     const {userId} = useAuth()
 
+    useEffect(() => {
 
-    
+      if(isRoom) {
+        navigate(`/editor/${document.getElementById("joinWorkspaceId").value}`)
+        setIsRoom(false)
+      }
 
-    
+    }, [isRoom,navigate])
 
-    
-    
 
-    // console.log(isRoom)
 
     
 
@@ -109,7 +108,7 @@ export function DialogDemo({room, setRoom}) {
     <>
     {/* Create workspace dialog box */}
     <Dialog >
-      <div className="flex items-center mb-5 ">
+      <div className="flex items-center mb-5 font-['Arial']">
 
       <DialogTrigger >
         <Button className="w-[150px]" variant="outline">Create Workspace</Button>
@@ -152,7 +151,7 @@ export function DialogDemo({room, setRoom}) {
       <div className="flex items-center space-x-5">
 
       <DialogTrigger >
-        <Button className="w-[150px]">Join Workspace</Button>
+        <Button className="w-[150px] bg-green-500 hover:bg-green-600">Join Workspace</Button>
       </DialogTrigger>
       </div>
       <DialogContent className="sm:max-w-[425px]">
@@ -173,7 +172,7 @@ export function DialogDemo({room, setRoom}) {
           
         </div>
         <DialogFooter>
-          <Button onClick={() => JoinWorkspace(document.getElementById("joinWorkspaceId").value, setIsRoom) ? console.log(true): console.log(false)}  type="submit" variant="ghost"><div role="button" className="w-full h-full rounded-md" >Join</div></Button>
+          <Button onClick={() => JoinWorkspace(document.getElementById("joinWorkspaceId").value, setIsRoom)}  type="submit" variant="ghost"><div role="button" className="w-full h-full rounded-md" >Join</div></Button>
         </DialogFooter>
         
       </DialogContent>
