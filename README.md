@@ -28,6 +28,6 @@ Frontend: React.js
 
 Backend: Express.js
 
-Real-Time Communication: Socket.io
+Real-Time Communication: Socket.io - A web socket implementation for bi-directional communication.
 
 Database: Google Firebase
